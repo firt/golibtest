@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package serviced;
+
+option optimize_for = SPEED;
+
+service Test {
+  rpc Search       (RequestSearch)        returns (ResponseSearch) {}
+  rpc Stats        (RequestStats)         returns (ResponseStats) {}
+}
+
+message Hash {
+  repeated uint32 values = 1;
+  string data            = 2;
+  uint32 distance        = 3;
+}
+
+message RequestSearch {
+  Hash hash           = 1;
+  uint32 limit        = 2;
+}
+
+message ResponseSearch {
+  repeated Hash hashes = 1;
+}
+
+message RequestStats {
+}
+
+message ResponseStats {
+  uint64 last_update_ts  = 1;
+  uint64 total_searches  = 2;
+  uint64 total_negative  = 3;
+  uint64 total_positive  = 4;
+  uint64 total_hashes    = 5;
+}
